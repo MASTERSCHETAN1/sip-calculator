@@ -20,6 +20,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative; /* Added for positioning the logo */
         }
         .navigation-buttons {
             text-align: center;
@@ -219,11 +220,21 @@
             border-radius: 8px;
             background-color: #f9f9f9;
         }
+        /* Style for the top-right logo */
+        #topRightLogo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            max-width: 100px; /* Adjust size as needed */
+            height: auto;
+            z-index: 10; /* Ensure it's above other content if necessary */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Replaced "SIP Calculator" with "masterSchetan.com" and added a hyperlink -->
+        <img id="topRightLogo" src="logo final.jpg" alt="Company Logo">
+
         <h1 style="text-align: center; color: #333; margin-bottom: 30px;">
             <a href="https://masterschetan.com/" target="_blank" style="text-decoration: none; color: inherit;">master<span style="color: red;">S</span>chetan.com</a>
         </h1>
@@ -275,11 +286,11 @@
                     <div id="summaryPay">Rs. 1,000</div>
                 </div>
                 <div class="summary-item total-paid">
-                    <div>Total Amount Paid (96 Months)</div>
+                    <div>Total Amount Paid </div>
                     <div id="summaryTotalPaid">Rs. 96,000</div>
                 </div>
                 <div class="summary-item monthly-receive">
-                    <div>Monthly Receive (97 Months onwards)</div>
+                    <div>Monthly Receive </div>
                     <div id="summaryMonthlyReceive">Rs. 1,000</div>
                 </div>
                 <div class="summary-item final-amount">
@@ -308,7 +319,6 @@
             </div>
         </div>
 
-        <!-- New section for Mutual Fund Recommendations - now a separate page -->
         <div id="fundRecommendationsPage" class="fund-recommendations" style="display: none;">
             <h2>Mutual Fund Recommendations (Data from Provided Document)</h2>
             <p class="disclaimer">
@@ -316,8 +326,7 @@
             </p>
 
             <div id="fundRecommendationsContainer">
-                <!-- Fund categories and tables will be rendered here by JavaScript -->
-            </div>
+                </div>
         </div>
     </div>
 
@@ -328,24 +337,24 @@
         // This data is now pre-populated from the provided Word document with updated hyperlinks
         const mutualFundData = {
             "Small Cap Funds": [
-                {"name": "Bandhan Small Cap", "cagr": "33.96% (Since Inception)", "launchDate": "08-02-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANDHAN-SMALL-CAP-FUND-REGULAR-PLAN-GROWTH"},
-                {"name": "Mahindra Manulife Small Cap", "cagr": "30.01% (Since Inception)", "launchDate": "05-12-2022", "url": "https://www.advisorkhoj.com/mutual-funds-research/Mahindra-Manulife-Small-Cap-Fund-Regular-Plan-Growth"},
-                {"name": "Bank of India Small", "cagr": "27.26% (Since Inception)", "launchDate": "12-12-2018", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANK-OF-INDIA-Small-Cap-Fund-Regular-Plan-Growth"}
+                {"name": "Bandhan Small Cap", "cagr": "33.96%", "launchDate": "08-02-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANDHAN-SMALL-CAP-FUND-REGULAR-PLAN-GROWTH"},
+                {"name": "Mahindra Manulife Small Cap", "cagr": "30.01%", "launchDate": "05-12-2022", "url": "https://www.advisorkhoj.com/mutual-funds-research/Mahindra-Manulife-Small-Cap-Fund-Regular-Plan-Growth"},
+                {"name": "Bank of India Small", "cagr": "27.26%", "launchDate": "12-12-2018", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANK-OF-INDIA-Small-Cap-Fund-Regular-Plan-Growth"}
             ],
             "Mid Cap Funds": [
-                {"name": "Union MidCap", "cagr": "33.51% (Since Inception)", "launchDate": "23-03-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/Union-Midcap-Fund-Regular-Plan-Growth-Option"},
-                {"name": "JM Midcap", "cagr": "28.76% (Since Inception)", "launchDate": "21-11-2022", "url": "https://www.advisorkhoj.com/mutual-funds-research/JM-Midcap-Fund-Regular-Growth"},
-                {"name": "WhiteOak Capital Mid Cap", "cagr": "25.79% (Since Inception)", "launchDate": "25-06-2007", "url": "https://www.advisorkhoj.com/mutual-funds-research/WhiteOak-Capital-Mid-Cap-Fund-Regular-Plan-Growth"}
+                {"name": "Union MidCap", "cagr": "33.51%", "launchDate": "23-03-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/Union-Midcap-Fund-Regular-Plan-Growth-Option"},
+                {"name": "NIPPON INDIA GROWTH MID CAP", "cagr": "22.39%", "launchDate": "05-10-1995", "url": "https://www.advisorkhoj.com/mutual-funds-research/NIPPON-INDIA-GROWTH-MID-CAP-FUND-Growth-Plan-Growth-Option"},
+                {"name": "Franklin India Mid Cap", "cagr": "19.31%", "launchDate": "01-12-1993", "url": "https://www.advisorkhoj.com/mutual-funds-research/Franklin-India-Mid-Cap-Fund-Growth"}
             ],
             "Large Cap Funds": [
-                {"name": "Motilal Oswal Large Cap", "cagr": "27.95% (Since Inception)", "launchDate": "06-02-2024", "url": "https://www.advisorkhoj.com/mutual-funds-research/Motilal-Oswal-Large-Cap-Regular-Plan-Growth"},
-                {"name": "ABSL Large Cap", "cagr": "18.94% (Since Inception)", "launchDate": "05-08-2002", "url": "https://www.advisorkhoj.com/mutual-funds-research/Aditya-Birla-Sun-Life-Large-Cap-Fund-Growth"},
-                {"name": "DSP Large Cap", "cagr": "18.87% (Since Inception)", "launchDate": "05-03-2003", "url": "https://www.advisorkhoj.com/mutual-funds-research/DSP-Large-Cap-Fund-Regular-Plan-Growth"}
+                {"name": "Motilal Oswal Large Cap", "cagr": "27.95%", "launchDate": "06-02-2024", "url": "https://www.advisorkhoj.com/mutual-funds-research/Motilal-Oswal-Large-Cap-Regular-Plan-Growth"},
+                {"name": "ABSL Large Cap", "cagr": "18.94%", "launchDate": "05-08-2002", "url": "https://www.advisorkhoj.com/mutual-funds-research/Aditya-Birla-Sun-Life-Large-Cap-Fund-Growth"},
+                {"name": "DSP Large Cap", "cagr": "18.87%", "launchDate": "05-03-2003", "url": "https://www.advisorkhoj.com/mutual-funds-research/DSP-Large-Cap-Fund-Regular-Plan-Growth"}
             ],
             "Flexi Cap Funds": [
-                {"name": "Bank of India Flexi Cap", "cagr": "28.18% (Since Inception)", "launchDate": "05-06-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANK-OF-INDIA-Flexi-Cap-Fund-Regular-Plan-Growth"},
-                {"name": "ITI Flexi Cap", "cagr": "27.72% (Since Inception)", "launchDate": "17-02-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/ITI-Flexi-Cap-Fund-Regular-Plan-Growth"},
-                {"name": "Helios Flexi Cap", "cagr": "23.38% (Since Inception)", "launchDate": "13-11-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/Helios-Flexi-Cap-Fund-Regular-Plan-Growth-Option"}
+                {"name": "Bank of India Flexi Cap", "cagr": "28.18%", "launchDate": "05-06-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANK-OF-INDIA-Flexi-Cap-Fund-REGULAR-PLAN-GROWTH"},
+                {"name": "ITI Flexi Cap", "cagr": "27.72%", "launchDate": "17-02-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/ITI-Flexi-Cap-Fund-Regular-Plan-Growth"},
+                {"name": "Helios Flexi Cap", "cagr": "23.38%", "launchDate": "13-11-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/Helios-Flexi-Cap-Fund-Regular-Plan-Growth-Option"}
             ]
         };
 
@@ -446,7 +455,7 @@
                 
                 document.getElementById('summaryPay').textContent = `Rs. ${monthlyPayment.toLocaleString()}`;
                 document.getElementById('summaryTotalPaid').innerHTML = `Rs. ${totalPaid.toLocaleString()}<br><small>(${totalMonths} Months)</small>`;
-                document.getElementById('summaryMonthlyReceive').innerHTML = `Rs. ${monthlyReceive.toLocaleString()}${inflowType === 'doubling' ? ' (1-2-3-4 Pattern)' : ''}<br><small>(${totalMonths + 1} Months onwards)</small>`;
+                document.getElementById('summaryMonthlyReceive').innerHTML = `Rs. ${monthlyReceive.toLocaleString()}${inflowType === 'doubling' ? ' (1-2-3-4 Pattern)' : ''}<br><small>(${totalMonths + 1} Months onwards) per month for Lifetime or can redeem on retirement</small>`;
                 document.getElementById('summaryFinalAmount').textContent = `Rs. ${finalAmountCalculated.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                 
                 // Display table
@@ -531,6 +540,15 @@
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 let yPos = 20;
 
+                // Add logo to PDF
+                const img = document.getElementById('topRightLogo');
+                if (img) {
+                    const imgData = await html2canvas(img, { scale: 2, logging: false, useCORS: true }).then(canvas => canvas.toDataURL('image/png'));
+                    const imgWidth = 30; // Adjust size for PDF
+                    const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
+                    pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.width - imgWidth - 10, 10, imgWidth, imgHeight);
+                }
+
                 // --- Add SIP Calculator Content to PDF ---
                 pdf.setFontSize(20);
                 pdf.text('SIP Calculator Report', 105, yPos, { align: 'center' });
@@ -552,7 +570,7 @@
                 yPos += 8;
                 pdf.text(`Total Amount Paid: Rs. ${totalPaid.toLocaleString()}`, 20, yPos);
                 yPos += 8;
-                pdf.text(`Monthly Receive: Rs. ${monthlyReceive.toLocaleString()} ${inflowType === 'doubling' ? ' (1-2-3-4 Pattern)' : ''} (from month ${totalMonths + 1})`, 20, yPos);
+                pdf.text(`Monthly Receive: Rs. ${monthlyReceive.toLocaleString()} ${inflowType === 'doubling' ? ' (1-2-3-4 Pattern)' : ''} per month for Lifetime or can redeem on retirement.`, 20, yPos);
                 yPos += 8;
                 pdf.text(`Return Rate: ${returnRate}%`, 20, yPos);
                 yPos += 8;
@@ -766,7 +784,6 @@
         </tbody>
     </table>
 
-    <!-- Fund Recommendations for HTML fallback -->
     <h2>Mutual Fund Recommendations (Sample Data)</h2>
     <p class="disclaimer">
         <strong>Disclaimer:</strong> The fund data below is extracted from the provided Word document and is static as of March 21, 2025. It is NOT live data. For the most accurate and up-to-date fund information, please visit the respective fund house websites or financial advisors. This is not financial advice.
@@ -781,7 +798,7 @@
                         <tr>
                             <th>Sr. No.</th>
                             <th>Fund Name</th>
-                            <th>CAGR Since Inception</th>
+                            <th>CAGR</th>
                             <th>Launch Date</th>
                         </tr>
                     </thead>
@@ -875,7 +892,7 @@
                             <tr>
                                 <th>Sr. No.</th>
                                 <th>Fund Name</th>
-                                <th>CAGR Since Inception</th>
+                                <th>CAGR</th>
                                 <th>Launch Date</th>
                             </tr>
                         </thead>

@@ -220,8 +220,8 @@
             border-radius: 8px;
             background-color: #f9f9f9;
         }
-        /* Style for the top-right logo */
-        #topRightLogo {
+        /* Style for the top-left logo */
+        #topLeftLogo {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -229,11 +229,76 @@
             height: auto;
             z-index: 10; /* Ensure it's above other content if necessary */
         }
+        /* Style for the top-right image */
+        #topRightImage {
+            position: absolute;
+            top: 10px;
+            right: 10px; /* Changed from left to right */
+            max-width: 120px; /* Same size as top-left logo */
+            height: auto;
+            z-index: 10;
+        }
+
+        /* Compounding Calculator Styles - Merged from compounding.html */
+        #compoundingCalculatorContent {
+            font-family: "Inter", sans-serif;
+            background-color: #f3f4f6; /* Light gray background */
+            color: #333;
+        }
+        #compoundingCalculatorContent .container-compounding {
+            max-width: 1024px; /* Slightly wider for the table */
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 1.5rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+        }
+        #compoundingCalculatorContent input[type="number"]::-webkit-outer-spin-button,
+        #compoundingCalculatorContent input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        #compoundingCalculatorContent input[type="number"] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+        /* Style for the table container to allow scrolling */
+        #compoundingCalculatorContent .table-container-compounding {
+            max-height: 600px; /* Limit height to enable scrolling for many rows */
+            overflow-y: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        #compoundingCalculatorContent .table-container-compounding table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        #compoundingCalculatorContent .table-container-compounding th,
+        #compoundingCalculatorContent .table-container-compounding td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0; /* Tailwind gray-200 */
+        }
+        #compoundingCalculatorContent .table-container-compounding th {
+            background-color: #e0f2fe; /* Tailwind blue-100 */
+            color: #1e40af; /* Tailwind blue-800 */
+            font-weight: 600;
+            position: sticky; /* Make header sticky */
+            top: 0;
+            z-index: 10;
+        }
+        #compoundingCalculatorContent .table-container-compounding tbody tr:nth-child(even) {
+            background-color: #f8fafc; /* Tailwind gray-50 */
+        }
+        #compoundingCalculatorContent .table-container-compounding tbody tr:hover {
+            background-color: #eff6ff; /* Tailwind blue-50 */
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img id="topRightLogo" src="logo final.jpg" alt="Company Logo">
+        <img id="topLeftLogo" src="logo final.jpg" alt="Company Logo">
+        <img id="topRightImage" src="penny.jpeg" alt="Penny Image">
 
         <h1 style="text-align: center; color: #333; margin-bottom: 30px;">
             <a href="https://masterschetan.com/" target="_blank" style="text-decoration: none; color: inherit;">master<span style="color: red;">S</span>chetan.com</a>
@@ -242,6 +307,7 @@
         <div class="navigation-buttons">
             <button onclick="showPage('sipCalculatorContent')"> SIP </button>
             <button onclick="showPage('fundRecommendationsPage')"> FUNDS </button>
+            <button onclick="showPage('compoundingCalculatorContent')"> COMPOUNDING </button>
         </div>
 
         <div id="sipCalculatorContent">
@@ -328,6 +394,59 @@
             <div id="fundRecommendationsContainer">
                 </div>
         </div>
+
+        <div id="compoundingCalculatorContent" style="display: none;">
+            <div class="container-compounding bg-white p-6 sm:p-8 rounded-xl shadow-lg w-full">
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-center text-blue-700 mb-6">
+                    <a href="https://www.moneycontrol.com/indian-indices/sensex-4.html" target="_blank" rel="noopener noreferrer" class="no-underline hover:underline">
+                        Compounding Returns Calculator
+                    </a>
+                </h1>
+
+                <div class="mb-6 text-center">
+                    <p class="text-lg text-gray-700">
+                        Initial Investment: <span class="font-semibold text-green-600">₹100</span>
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
+                    <label for="compoundingReturnRate" class="text-gray-700 font-medium text-lg sm:text-xl">
+                        Annual Return Rate (%):
+                    </label>
+                    <input
+                        type="number"
+                        id="compoundingReturnRate"
+                        min="0"
+                        step="0.1"
+                        value="7"
+                        class="w-full sm:w-40 p-3 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200 text-center text-lg"
+                        placeholder="e.g., 7"
+                    />
+                    <button
+                        id="calculateCompoundingBtn"
+                        class="w-full sm:w-auto px-6 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:scale-105"
+                    >
+                        Calculate Growth
+                    </button>
+                </div>
+
+                <div class="table-container-compounding bg-white">
+                    <table id="compoundingTable" class="min-w-full divide-y divide-gray-200">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Starting Balance (₹)</th>
+                                <th>Annual Return (₹)</th>
+                                <th>Ending Balance (₹)</th>
+                                <th>Rate (%)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -346,15 +465,25 @@
                 {"name": "NIPPON INDIA GROWTH MID CAP", "cagr": "22.39%", "launchDate": "05-10-1995", "url": "https://www.advisorkhoj.com/mutual-funds-research/NIPPON-INDIA-GROWTH-MID-CAP-FUND-Growth-Plan-Growth-Option"},
                 {"name": "Franklin India Mid Cap", "cagr": "19.31%", "launchDate": "01-12-1993", "url": "https://www.advisorkhoj.com/mutual-funds-research/Franklin-India-Mid-Cap-Fund-Growth"}
             ],
-            "Large Cap Funds": [
-                {"name": "Motilal Oswal Large Cap", "cagr": "27.95%", "launchDate": "06-02-2024", "url": "https://www.advisorkhoj.com/mutual-funds-research/Motilal-Oswal-Large-Cap-Regular-Plan-Growth"},
-                {"name": "ABSL Large Cap", "cagr": "18.94%", "launchDate": "05-08-2002", "url": "https://www.advisorkhoj.com/mutual-funds-research/Aditya-Birla-Sun-Life-Large-Cap-Fund-Growth"},
-                {"name": "DSP Large Cap", "cagr": "18.87%", "launchDate": "05-03-2003", "url": "https://www.advisorkhoj.com/mutual-funds-research/DSP-Large-Cap-Fund-Regular-Plan-Growth"}
+            "Multi Cap Funds": [
+                {"name": "Motilal Oswal Multi Cap", "cagr": "28.13%", "launchDate": "18-06-2024", "url": "https://www.advisorkhoj.com/mutual-funds-research/Motilal-Oswal-Multi-Cap-Fund-Regular-Plan-Growth"},
+                {"name": "HSBC Multi Cap", "cagr": "28.02%", "launchDate": "05-01-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/HSBC-Multi-Cap-Fund-Regular-Growth"},
+                {"name": "Bank of India Multi Cap", "cagr": "26.79%", "launchDate": "03-03-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/Bank-of-India-Multi-Cap-Fund-Regular-Plan-Growth"}
             ],
             "Flexi Cap Funds": [
                 {"name": "Bank of India Flexi Cap", "cagr": "28.18%", "launchDate": "05-06-2020", "url": "https://www.advisorkhoj.com/mutual-funds-research/BANK-OF-INDIA-Flexi-Cap-Fund-REGULAR-PLAN-GROWTH"},
                 {"name": "ITI Flexi Cap", "cagr": "27.72%", "launchDate": "17-02-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/ITI-Flexi-Cap-Fund-Regular-Plan-Growth"},
                 {"name": "Helios Flexi Cap", "cagr": "23.38%", "launchDate": "13-11-2023", "url": "https://www.advisorkhoj.com/mutual-funds-research/Helios-Flexi-Cap-Fund-Regular-Plan-Growth-Option"}
+            ],
+            "ELSS Cap Funds": [
+                {"name": "WhiteOak Capital ELSS Tax Saver", "cagr": "22.04%", "launchDate": "14-10-2022", "url": "https://www.advisorkhoj.com/mutual-funds-research/WhiteOak-Capital-ELSS-Tax-Saver-Fund-Regular-Plan-Growth"},
+                {"name": "HDFC ELSS Tax saver", "cagr": "21.77%", "launchDate": "05-03-1996", "url": "https://www.advisorkhoj.com/mutual-funds-research/HDFC-ELSS-Tax-saver-Growth-Plan"},
+                {"name": "Parag Parikh ELSS Tax Save", "cagr": "21.21%", "launchDate": "07-07-2019", "url": "https://www.advisorkhoj.com/mutual-funds-research/Parag-Parikh-ELSS-Tax-Saver-Fund-Regular-Growth"}
+            ],
+            "Large Cap Funds": [
+                {"name": "Motilal Oswal Large Cap", "cagr": "27.95%", "launchDate": "06-02-2024", "url": "https://www.advisorkhoj.com/mutual-funds-research/Motilal-Oswal-Large-Cap-Regular-Plan-Growth"},
+                {"name": "ABSL Large Cap", "cagr": "18.94%", "launchDate": "05-08-2002", "url": "https://www.advisorkhoj.com/mutual-funds-research/Aditya-Birla-Sun-Life-Large-Cap-Fund-Growth"},
+                {"name": "DSP Large Cap", "cagr": "18.87%", "launchDate": "05-03-2003", "url": "https://www.advisorkhoj.com/mutual-funds-research/DSP-Large-Cap-Fund-Regular-Plan-Growth"}
             ]
         };
 
@@ -362,6 +491,7 @@
         function showPage(pageId) {
             document.getElementById('sipCalculatorContent').style.display = 'none';
             document.getElementById('fundRecommendationsPage').style.display = 'none';
+            document.getElementById('compoundingCalculatorContent').style.display = 'none'; // Hide new page
             document.getElementById(pageId).style.display = 'block';
         }
 
@@ -517,8 +647,8 @@
 
             console.log('Starting PDF generation...');
 
-            const monthlyPayment = document.getElementById('monthlyPayment').value;
-            const years = document.getElementById('years').value;
+            const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
+            const years = parseInt(document.getElementById('years').value);
             const monthlyReceive = parseFloat(document.getElementById('monthlyReceive').value);
             const returnRate = parseFloat(document.getElementById('returnRate').value); 
             const inflowType = document.querySelector('input[name="inflowType"]:checked').value;
@@ -540,14 +670,7 @@
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 let yPos = 20;
 
-                // Add logo to PDF
-                const img = document.getElementById('topRightLogo');
-                if (img) {
-                    const imgData = await html2canvas(img, { scale: 2, logging: false, useCORS: true }).then(canvas => canvas.toDataURL('image/png'));
-                    const imgWidth = 30; // Adjust size for PDF
-                    const imgHeight = (img.naturalHeight / img.naturalWidth) * imgWidth;
-                    pdf.addImage(imgData, 'PNG', pdf.internal.pageSize.width - imgWidth - 10, 10, imgWidth, imgHeight);
-                }
+                // Removed: Image addition logic for topLeftLogo and topRightImage
 
                 // --- Add SIP Calculator Content to PDF ---
                 pdf.setFontSize(20);
@@ -618,51 +741,6 @@
                     pdf.addImage(sipImgData, 'PNG', 10, sipPosition, sipImgWidth, sipImgHeight);
                     sipHeightLeft -= pageHeight;
                 }
-
-                // --- Add Mutual Fund Recommendations to PDF ---
-                pdf.addPage();
-                yPos = 20;
-                pdf.setFontSize(20);
-                pdf.text('Mutual Fund Recommendations', 105, yPos, { align: 'center' });
-                yPos += 10;
-                pdf.setFontSize(10);
-                pdf.text('Disclaimer: The fund data below is extracted from the provided Word document and is static as of March 21, 2025. It is NOT live data. For the most accurate and up-to-date fund information, please visit the respective fund house websites or financial advisors. This is not financial advice.', 105, yPos + 5, { align: 'center', maxWidth: 180 });
-                yPos += 30; 
-
-                const fundRecommendationsContainer = document.getElementById('fundRecommendationsContainer');
-                const fundCategoryDivs = fundRecommendationsContainer.querySelectorAll('.fund-category');
-                
-                for (const categoryDiv of Array.from(fundCategoryDivs)) {
-                    const categoryName = categoryDiv.querySelector('h3').textContent;
-                    const tableElement = categoryDiv.querySelector('table');
-
-                    if (yPos + 10 > pdf.internal.pageSize.height - 20) { 
-                        pdf.addPage();
-                        yPos = 20;
-                    }
-                    pdf.setFontSize(14);
-                    pdf.text(categoryName, 20, yPos);
-                    yPos += 10;
-
-                    if (tableElement) {
-                        const categoryCanvas = await html2canvas(tableElement, { scale: 2, logging: false, useCORS: true });
-                        const categoryImgData = categoryCanvas.toDataURL('image/png');
-                        const categoryImgWidth = 180; 
-                        const categoryImgHeight = categoryCanvas.height * categoryImgWidth / categoryCanvas.width;
-
-                        if (yPos + categoryImgHeight > pdf.internal.pageSize.height - 20) { 
-                            pdf.addPage();
-                            yPos = 20;
-                        }
-                        pdf.addImage(categoryImgData, 'PNG', 15, yPos, categoryImgWidth, categoryImgHeight);
-                        yPos += categoryImgHeight + 15; 
-                    } else {
-                        // Handle case where no table is present (e.g., "No fund data available")
-                        pdf.setFontSize(10);
-                        pdf.text("No fund data available for this category.", 20, yPos);
-                        yPos += 10;
-                    }
-                }
                 
                 pdf.save('SIP-Calculator-Report.pdf');
                 console.log('PDF generated successfully');
@@ -685,8 +763,8 @@
         }
         
         function fallbackDownload() {
-            const monthlyPayment = document.getElementById('monthlyPayment').value;
-            const years = document.getElementById('years').value;
+            const monthlyPayment = parseFloat(document.getElementById('monthlyPayment').value);
+            const years = parseInt(document.getElementById('years').value);
             const monthlyReceive = parseFloat(document.getElementById('monthlyReceive').value);
             const returnRate = parseFloat(document.getElementById('returnRate').value); 
             const inflowType = document.querySelector('input[name="inflowType"]:checked').value;
@@ -784,39 +862,7 @@
         </tbody>
     </table>
 
-    <h2>Mutual Fund Recommendations (Sample Data)</h2>
-    <p class="disclaimer">
-        <strong>Disclaimer:</strong> The fund data below is extracted from the provided Word document and is static as of March 21, 2025. It is NOT live data. For the most accurate and up-to-date fund information, please visit the respective fund house websites or financial advisors. This is not financial advice.
-    </p>
-    `;
-
-            // Add fund tables to HTML report
-            for (const category in mutualFundData) {
-                htmlReport += `<h3>${category}</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Sr. No.</th>
-                            <th>Fund Name</th>
-                            <th>CAGR</th>
-                            <th>Launch Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
-                mutualFundData[category].forEach((fund, index) => {
-                    htmlReport += `
-                        <tr>
-                            <td>${index + 1}</td>
-                            <td><a href="${fund.url}" target="_blank">${fund.name}</a></td>
-                            <td>${fund.cagr}</td>
-                            <td>${fund.launchDate}</td>
-                        </tr>`;
-                });
-                htmlReport += `</tbody></table>`;
-            }
-
-            htmlReport += `
-</body>
+    </body>
 </html>`;
             
             // Create and download HTML file
@@ -875,12 +921,14 @@
             const container = document.getElementById('fundRecommendationsContainer');
             container.innerHTML = ''; // Clear previous content
 
-            // Order of categories as they appear in the Word document
+            // Order of categories as they should appear on the page
             const orderedCategories = [
                 "Small Cap Funds",
                 "Mid Cap Funds",
-                "Large Cap Funds",
-                "Flexi Cap Funds"
+                "Multi Cap Funds", // New category
+                "Flexi Cap Funds",
+                "ELSS Cap Funds",  // New category
+                "Large Cap Funds"  // Moved to the end
             ];
 
             orderedCategories.forEach(category => {
@@ -922,10 +970,86 @@
             });
         }
         
+        // --- Compounding Calculator Script ---
+        const compoundingInitialInvestment = 100; // Fixed initial investment
+        const compoundingTotalYears = 50; // Fixed number of years
+        const compoundingReturnRateInput = document.getElementById('compoundingReturnRate');
+        const calculateCompoundingBtn = document.getElementById('calculateCompoundingBtn');
+        const compoundingTableBody = document.querySelector('#compoundingTable tbody');
+
+        /**
+         * Calculates the compounded value for each year and returns detailed data for compounding calculator.
+         * @param {number} rate - The annual return rate as a decimal.
+         * @returns {Array<Object>} An array of objects with year, start, interest, and end values.
+         */
+        function calculateCompounding(rate) {
+            const data = [];
+            let currentValue = compoundingInitialInvestment;
+            for (let year = 1; year <= compoundingTotalYears; year++) {
+                const startingBalance = parseFloat(currentValue.toFixed(2));
+                const annualInterest = parseFloat((currentValue * rate).toFixed(2));
+                currentValue += annualInterest;
+                const endingBalance = parseFloat(currentValue.toFixed(2));
+
+                data.push({
+                    year: year,
+                    startingBalance: startingBalance,
+                    annualInterest: annualInterest,
+                    endingBalance: endingBalance,
+                    rate: (rate * 100).toFixed(1) // Convert back to percentage for display
+                });
+            }
+            return data;
+        }
+
+        /**
+         * Renders the compounding data into an HTML table for compounding calculator.
+         * @param {Array<Object>} data - The data to display in the table.
+         */
+        function renderCompoundingTable(data) {
+            compoundingTableBody.innerHTML = ''; // Clear existing rows
+
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                let endingBalanceContent = `₹${row.endingBalance.toLocaleString('en-IN')}`;
+
+                tr.innerHTML = `
+                    <td>${row.year}</td>
+                    <td>₹${row.startingBalance.toLocaleString('en-IN')}</td>
+                    <td>₹${row.annualInterest.toLocaleString('en-IN')}</td>
+                    <td>${endingBalanceContent}</td>
+                    <td>${row.rate}%</td>
+                `;
+                compoundingTableBody.appendChild(tr);
+            });
+        }
+
+        // Event listener for the compounding calculate button
+        calculateCompoundingBtn.addEventListener('click', () => {
+            const rate = parseFloat(compoundingReturnRateInput.value);
+
+            if (isNaN(rate) || rate < 0) {
+                // Since the message box is removed, no error message will be displayed.
+                return;
+            }
+
+            const decimalRate = rate / 100;
+            const compoundedData = calculateCompounding(decimalRate);
+            renderCompoundingTable(compoundedData);
+        });
+
+        // Initial table render for compounding calculator with default value when the page loads
+        function initializeCompoundingCalculator() {
+            const defaultRate = parseFloat(compoundingReturnRateInput.value) / 100;
+            const compoundedData = calculateCompounding(defaultRate);
+            renderCompoundingTable(compoundedData);
+        }
+
         // Initialize with default calculation and display fund recommendations
         try {
             calculateSIP();
             displayFundRecommendations(); 
+            initializeCompoundingCalculator(); // Initialize compounding calculator
             // Show the SIP calculator content by default when the page loads
             showPage('sipCalculatorContent');
         } catch (error) {

@@ -830,7 +830,7 @@
             <div><strong>Investment Period:</strong> ${years} years (${totalMonths} months)</div>
             <div><strong>Total Amount Paid:</strong> Rs. ${totalPaid.toLocaleString()}</div>
             <div><strong>Monthly Receive:</strong> Rs. ${monthlyReceive.toLocaleString()}</div>
-            <div><strong>Return Rate:</strong> ${returnRate}%</div>
+            <div><strong>Return Rate:</b> ${returnRate}%</div>
             <div><strong>Final Amount:</strong> Rs. ${finalAmountForHtml.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
         </div>
     </div>
@@ -1065,27 +1065,11 @@
             renderCompoundingTable(compoundedData);
         }
 
-        // Function to open SWP calculator with pre-filled parameters (best effort)
+        // Function to open SWP calculator
         function openSwpCalculator() {
             const baseUrl = 'https://my-eoffice.com/swp.php';
-            
-            // Attempt to construct URL parameters. 
-            // NOTE: These parameter names are *guesses* based on your requested field names.
-            // The actual website might use different names or not support URL parameters at all.
-            const params = new URLSearchParams({
-                'amc': 'NIPPON INDIA MUTUAL FUND',
-                'scheme': 'NIPPON INDIA GROWTH FUND - GROWTH',
-                'initial_amount': '100000',
-                'withdrawal_amount': '1000',
-                'swp_date': '1', // Day of the month
-                'from_month': '1',
-                'from_year': '1980',
-                'to_month': '1',
-                'to_year': '2025'
-            });
-
-            // Open in a new tab
-            window.open(`${baseUrl}?${params.toString()}`, '_blank');
+            // Open in a new tab without any parameters
+            window.open(baseUrl, '_blank');
         }
 
 

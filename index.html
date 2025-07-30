@@ -40,6 +40,26 @@
         .navigation-buttons button:hover {
             background: #0056b3;
         }
+        /* New CSS for the SWP button link */
+        .navigation-buttons .navigation-button-link {
+            background: #007bff; /* Same as other buttons */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Allows padding and margin */
+            text-align: center; /* For text centering */
+            line-height: normal; /* Adjust line height if needed */
+        }
+        .navigation-buttons .navigation-button-link:hover {
+            background: #0056b3; /* Same as other buttons hover */
+        }
+
         .input-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
@@ -329,7 +349,7 @@
             <button onclick="showPage('sipCalculatorContent')"> SIP </button>
             <button onclick="showPage('fundRecommendationsPage')"> FUNDS </button>
             <button onclick="showPage('compoundingCalculatorContent')"> COMPOUNDING </button>
-            <button onclick="openSwpCalculator()"> SWP </button>
+            <a href="https://my-eoffice.com/swp.php" target="_blank" class="navigation-button-link"> SWP </a>
         </div>
 
         <div id="sipCalculatorContent">
@@ -1065,12 +1085,11 @@
             renderCompoundingTable(compoundedData);
         }
 
-        // Function to open SWP calculator
-        function openSwpCalculator() {
-            const baseUrl = 'https://my-eoffice.com/swp.php';
-            // Open in a new tab without any parameters
-            window.open(baseUrl, '_blank');
-        }
+        // Removed the openSwpCalculator function as it's no longer needed for the SWP button
+        // function openSwpCalculator() {
+        //     const baseUrl = 'https://my-eoffice.com/swp.php';
+        //     window.open(baseUrl, '_blank');
+        // }
 
 
         // Initialize with default calculation and display fund recommendations

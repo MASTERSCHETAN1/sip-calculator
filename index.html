@@ -206,10 +206,29 @@
             font-size: 11px;
             width: 100%;
             min-width: 500px; /* Ensure tables don't get too narrow */
+            table-layout: fixed; /* Added to fix column widths */
         }
         .fund-category-table th {
             background-color: #add8e6; /* Light blue for headers */
             color: #333;
+        }
+        /* Specific column widths for uniformity */
+        .fund-category-table th:nth-child(1),
+        .fund-category-table td:nth-child(1) {
+            width: 10%; /* Sr. No. */
+        }
+        .fund-category-table th:nth-child(2),
+        .fund-category-table td:nth-child(2) {
+            width: 45%; /* Fund Name */
+            text-align: left; /* Align fund names to the left for readability */
+        }
+        .fund-category-table th:nth-child(3),
+        .fund-category-table td:nth-child(3) {
+            width: 15%; /* CAGR */
+        }
+        .fund-category-table th:nth-child(4),
+        .fund-category-table td:nth-child(4) {
+            width: 30%; /* Launch Date */
         }
         .disclaimer {
             font-size: 12px;
@@ -299,8 +318,8 @@
     <div class="container">
         <img id="topLeftLogo" src="logo final.jpg" alt="Company Logo">
         <a href="https://www.google.com/search?q=sensex+today" target="_blank">
-  <img id="topRightImage" src="penny.jpeg" alt="Penny Image">
-</a>
+            <img id="topRightImage" src="penny.jpeg" alt="Penny Image">
+        </a>
 
         <h1 style="text-align: center; color: #333; margin-bottom: 30px;">
             <a href="https://masterschetan.com/" target="_blank" style="text-decoration: none; color: inherit;">master<span style="color: red;">S</span>chetan.com</a>
@@ -310,6 +329,7 @@
             <button onclick="showPage('sipCalculatorContent')"> SIP </button>
             <button onclick="showPage('fundRecommendationsPage')"> FUNDS </button>
             <button onclick="showPage('compoundingCalculatorContent')"> COMPOUNDING </button>
+            <button onclick="openSwpCalculator()"> SWP </button>
         </div>
 
         <div id="sipCalculatorContent">
@@ -672,8 +692,6 @@
                 const pdf = new jsPDF('p', 'mm', 'a4');
                 let yPos = 20;
 
-                // Removed: Image addition logic for topLeftLogo and topRightImage
-
                 // --- Add SIP Calculator Content to PDF ---
                 pdf.setFontSize(20);
                 pdf.text('SIP Calculator Report', 105, yPos, { align: 'center' });
@@ -855,7 +873,7 @@
                 <td>Rs. ${data.total.toLocaleString('en-IN', {maximumFractionDigits: 0})}</td>
                 <td>Rs. ${data.avgReturn.toLocaleString('en-IN', {maximumFractionDigits: 0})}</td>
                 <td>Rs. ${data.totalWithReturn.toLocaleString('en-IN', {maximumFractionDigits: 0})}</td>
-                <td class="${data.inflow > 0 ? 'inflow' : ''}">Rs. ${data.inflow.toLocaleString('en-IN')}</td>
+                <td>Rs. ${data.inflow.toLocaleString('en-IN')}</td>
                 <td>Rs. ${data.closingBalance.toLocaleString('en-IN', {maximumFractionDigits: 0})}</td>
             </tr>`;
             });
@@ -1046,6 +1064,30 @@
             const compoundedData = calculateCompounding(defaultRate);
             renderCompoundingTable(compoundedData);
         }
+
+        // Function to open SWP calculator with pre-filled parameters (best effort)
+        function openSwpCalculator() {
+            const baseUrl = 'https://my-eoffice.com/swp.php';
+            
+            // Attempt to construct URL parameters. 
+            // NOTE: These parameter names are *guesses* based on your requested field names.
+            // The actual website might use different names or not support URL parameters at all.
+            const params = new URLSearchParams({
+                'amc': 'NIPPON INDIA MUTUAL FUND',
+                'scheme': 'NIPPON INDIA GROWTH FUND - GROWTH',
+                'initial_amount': '100000',
+                'withdrawal_amount': '1000',
+                'swp_date': '1', // Day of the month
+                'from_month': '1',
+                'from_year': '1980',
+                'to_month': '1',
+                'to_year': '2025'
+            });
+
+            // Open in a new tab
+            window.open(`${baseUrl}?${params.toString()}`, '_blank');
+        }
+
 
         // Initialize with default calculation and display fund recommendations
         try {
